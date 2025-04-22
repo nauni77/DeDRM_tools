@@ -12,6 +12,11 @@ pycryptodomex = "^3.22.0"
 defusedxml = "^0.7.1"
 lxml = "^5.3.2"
 pyopenssl = "^25.0.0"
+typer = "^0.15.2"
+
+[tool.poetry.scripts]
+decryptEPUB = "DeDRM_plugin.ineptepub:app"
+decryptPDF = "DeDRM_plugin.ineptpdf:app"
 
 [build-system]
 requires = ["poetry-core"]

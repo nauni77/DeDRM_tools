@@ -48,11 +48,15 @@ import base64
 import zlib
 import zipfile
 from zipfile import ZipInfo, ZipFile, ZIP_STORED, ZIP_DEFLATED
-from zeroedzipinfo import ZeroedZipInfo
+from .zeroedzipinfo import ZeroedZipInfo
 from contextlib import closing
 from lxml import etree
 from uuid import UUID
 import hashlib
+
+from typing import List
+import typer
+from typing_extensions import Annotated
 
 try:
     from Cryptodome.Cipher import AES, PKCS1_v1_5
@@ -61,6 +65,7 @@ except ImportError:
     from Crypto.Cipher import AES, PKCS1_v1_5
     from Crypto.PublicKey import RSA
 
+app = typer.Typer(no_args_is_help=True)
 
 def unpad(data, padding=16):
     if sys.version_info[0] == 2:
@@ -72,8 +77,8 @@ def unpad(data, padding=16):
 
 #@@CALIBRE_COMPAT_CODE@@
 
-from utilities import SafeUnbuffered
-from argv_utils import unicode_argv
+from .utilities import SafeUnbuffered
+from .argv_utils import unicode_argv
 
 
 class ADEPTError(Exception):
@@ -331,6 +336,29 @@ def decryptBook(userkey, inpath, outpath):
             return 2
     return 0
 
+@app.command()
+def typoraDecryptEbook(input_file: Annotated[str, typer.Argument(help="file for decryption")],
+                       output_direcectory: Annotated[str, typer.Option(help="directory to place the decrypted file")] = "/Users/oliver.wagner//Desktop/ebooks/",
+                       userkey_file: Annotated[str, typer.Option(help="reference to UserKey")] = "/Users/oliver.wagner/bin/scripts/subScripts/decrypt/adobekey.der"):
+    # result = decryptBook(userkey, inpath, outpath)
+    # if result == 0:
+    #     print("Successfully decrypted {0:s} as {1:s}".format(os.path.basename(inpath),os.path.basename(outpath)))
+    # return result
+    
+    output_file = os.path.join(output_direcectory, os.path.basename(input_file))
+
+    
+    print("input_file: ", input_file)
+    print("output_file: ", output_file)
+    print("userkey: ", userkey_file)
+
+    userkey = open(userkey_file,'rb').read()
+
+    result = decryptBook(userkey, input_file, output_file)
+
+    if result == 0:
+        print("Successfully decrypted {0:s} as {1:s}".format(os.path.basename(input_file),os.path.basename(output_file)))
+    return result
 
 def cli_main():
     sys.stdout=SafeUnbuffered(sys.stdout)
