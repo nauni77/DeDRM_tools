@@ -338,8 +338,11 @@ def decryptBook(userkey, inpath, outpath):
 
 @app.command()
 def typoraDecryptEbook(input_file: Annotated[str, typer.Argument(help="file for decryption")],
-                       output_direcectory: Annotated[str, typer.Option(help="directory to place the decrypted file")] = "/Users/oliver.wagner//Desktop/ebooks/",
-                       userkey_file: Annotated[str, typer.Option(help="reference to UserKey")] = "/Users/oliver.wagner/bin/scripts/subScripts/decrypt/adobekey.der"):
+                       output_direcectory: Annotated[str, typer.Option(help="directory to place the decrypted file")] = "/Users/oliver.wagner/Desktop/ebooks/",
+                       userkey_file: Annotated[str, typer.Option(help="reference to UserKey")] = "/Users/oliver.wagner/iCloudDrive/configuration/decrpyt_ebooks/adeptkey.der"):
+
+    # TODO: add a possiblity to specify output_directory and userkey_file via property file
+
     # result = decryptBook(userkey, inpath, outpath)
     # if result == 0:
     #     print("Successfully decrypted {0:s} as {1:s}".format(os.path.basename(inpath),os.path.basename(outpath)))
@@ -347,7 +350,6 @@ def typoraDecryptEbook(input_file: Annotated[str, typer.Argument(help="file for 
     
     output_file = os.path.join(output_direcectory, os.path.basename(input_file))
 
-    
     print("input_file: ", input_file)
     print("output_file: ", output_file)
     print("userkey: ", userkey_file)

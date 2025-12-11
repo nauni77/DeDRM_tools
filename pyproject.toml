@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "dedrm-tools-git"
+name = "dedrm-tools"
 version = "0.1.0"
 description = ""
 authors = ["Oliver Wagner <oliver@wagner-www.de>"]
