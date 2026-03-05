@@ -32,6 +32,17 @@ done! ✨ 🌟 ✨
 That's all.
 Now you can call `decryptEPUB` and `decryptPDF` from the terminal.
 
+## release process
+
+You can release the project with `poetry`. GitVersion is not used for versioning, just adopt the poetry.toml version information and commit the changes to git.
+
+```bash
+$ poetry publish --repository bls19 --build
+```
+
+The repository bls19 needs to be defined and configured in the poetry.toml file or globally on your system.
+Now you can install the new release with pipX and use the new version of the tool.
+
 ## solved problems from original project
 
 ### import handling
